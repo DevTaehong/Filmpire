@@ -17,6 +17,7 @@ module.exports = {
     'react',
   ],
   rules: {
+    'import/no-cycle': 'off',
     'import/no-extraneous-dependencies': 'off',
     'react/react-in-jsx-scope': 0,
     'import/extensions': 0,
