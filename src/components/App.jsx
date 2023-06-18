@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import useStyles from './styles';
 
+// The reason why doing this is because we want to import all the components from the index.js file.
 import { Actors, MovieInformation, Movies, NavBar, Profile } from '.';
 
 const App = () => {
