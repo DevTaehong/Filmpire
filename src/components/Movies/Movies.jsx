@@ -1,19 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, CircularProgress, Typography } from '@mui/material';
 
+import { useSelector } from 'react-redux';
+import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
 // NOTE - Step 5 - Import the useGetMoviesQuery hook (Last step)
 import { useGetMoviesQuery } from '../../services/TMDB';
 import { MovieList } from '..';
 
 const Movies = () => {
+  const [page, setPage] = useState(1);
+  const { genreIdOrCategoryName, searchQuery } = useSelector((state) => state.currentGenreOrCategory);
   // https://redux-toolkit.js.org/tutorials/rtk-query
   // If I get an error like "Cannot read properties of undefined (reading 'results')"",
   // it's because I didn't use error, isFetching, or data
-  const { data, error, isFetching } = useGetMoviesQuery();
+  const { data, error, isFetching } = useGetMoviesQuery({ genreIdOrCategoryName, page, searchQuery });
 
   if (isFetching) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Box display="flex" justifyContent="center">
         <CircularProgress size="4rem" />
       </Box>
     );
