@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { Box, CircularProgress, Typography } from '@mui/material';
 
 import { useSelector } from 'react-redux';
-import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
+// import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
 // NOTE - Step 5 - Import the useGetMoviesQuery hook (Last step)
 import { useGetMoviesQuery } from '../../services/TMDB';
 import { MovieList } from '..';
 
 const Movies = () => {
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const { genreIdOrCategoryName, searchQuery } = useSelector((state) => state.currentGenreOrCategory);
   // https://redux-toolkit.js.org/tutorials/rtk-query
   // If I get an error like "Cannot read properties of undefined (reading 'results')"",

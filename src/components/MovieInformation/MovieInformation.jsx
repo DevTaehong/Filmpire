@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Modal, Typography, Button, ButtonGroup, Grid, Box, CircularProgress, useMediaQuery, Rating } from '@mui/material';
-import { Movie as MovieIcon, Theaters, Language, PlusOne, Favorite, FavoriteBorderOutlined, Remove, ArrowBack, Movie } from '@mui/icons-material';
+import { Modal, Typography, Button, ButtonGroup, Grid, Box, CircularProgress, Rating } from '@mui/material';
+import { Movie as MovieIcon, Theaters, Language, PlusOne, Favorite, FavoriteBorderOutlined, Remove, ArrowBack } from '@mui/icons-material';
 import { Link, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
 import useStyles from './styles';
 import genreIcons from '../../assets/genres';
 import { MovieList } from '..';
@@ -19,7 +18,6 @@ const MovieInformation = () => {
   const { data: recommendations, isFetching: isRecommendationsFetching } = useGetRecommendationsQuery({ list: '/recommendations', movieId: id });
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-
   const isMovieFavorite = true;
   const isMovieWatchlisted = true;
   const addToFavorites = () => {
@@ -30,7 +28,7 @@ const MovieInformation = () => {
 
   };
 
-  if (isFetching) {
+  if (isFetching || isRecommendationsFetching) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center">
         <CircularProgress size="8rem" />
@@ -114,8 +112,24 @@ const MovieInformation = () => {
           <div className={classes.buttonContainer}>
             <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
               <ButtonGroup size="medium" variant="outlined">
-                {data.homepage && (<Button target="_blank" rel="noopener noreferrer" endIcon={<Language />} href={data?.homepage}>Website</Button>)}
-                <Button target="_blank" rel="noopener noreferrer" href={`https://www.imdb.com/title/${data?.imdb_id}`} endIcon={<MovieIcon />}>IMDB</Button>
+                {data.homepage && (
+                  <Button
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    endIcon={<Language />}
+                    href={data?.homepage}
+                  >
+                    Website
+                  </Button>
+                )}
+                <Button
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={`https://www.imdb.com/title/${data?.imdb_id}`}
+                  endIcon={<MovieIcon />}
+                >
+                  IMDB
+                </Button>
                 {data.videos.results.length > 0 && (<Button onClick={() => setOpen(true)} href="#" endIcon={<Theaters />}>Trailer</Button>)}
               </ButtonGroup>
             </Grid>

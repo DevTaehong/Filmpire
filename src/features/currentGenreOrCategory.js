@@ -1,13 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = {
+  genreIdOrCategoryName: '',
+  page: 1,
+  searchQuery: '',
+};
+
 // https://redux-toolkit.js.org/tutorials/quick-start
 export const genreOrCategory = createSlice({
   name: 'genreOrCategory',
-  initialState: {
-    genreIdOrCategoryName: '',
-    page: 1,
-    searchQuery: '',
-  },
+  initialState,
   reducers: {
     selectGenreOrCategory: (state, action) => {
       state.genreIdOrCategoryName = action.payload;

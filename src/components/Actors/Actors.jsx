@@ -1,15 +1,79 @@
-import React from 'react';
-
-// use useParams to get the actor's id from the url
-// make a new call using redux toolkit query -> get actor details call...
-// research tmdb api docs...
-// use newly created useGetActorHook to get actor's info  to the component
+import React, { useState } from 'react';
+import { useParams, useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
+import { ArrowBack } from '@mui/icons-material';
+import { useGetActorQuery, useGetActorMoviesQuery } from '../../services/TMDB';
+import useStyles from './styles';
+import MovieList from '../MovieList/MovieList';
 
 const Actors = () => {
-  console.log('Actors');
+  const { id } = useParams();
+  const history = useHistory();
+  const page = 1;
+  const { data, error, isFetching } = useGetActorQuery(id);
+  const { data: movies, error: actorMoviesError, isFetching: isActorMoviesFetching } = useGetActorMoviesQuery({ id, page });
+  const classes = useStyles();
+
+  if (isFetching || isActorMoviesFetching) {
+    return (
+      <Box display="flex" justifyContent="center">
+        <CircularProgress size="4rem" />
+      </Box>
+    );
+  }
+
+  if (error || actorMoviesError) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center">
+        <Button startIcon={<ArrowBack />} onClick={() => history.goBack()} color="primary">
+          Go back
+        </Button>
+      </Box>
+    );
+  }
 
   return (
-    <div>Actors</div>
+    <>
+      <Grid container spacing={3} className={classes.containerSpaceAround}>
+        <Grid item lg={5} xl={4}>
+          <img
+            className={classes.image}
+            src={data.profile_path
+              ? `https://image.tmdb.org/t/p/w780${data.profile_path}`
+              : 'https://www.movienewz.com/img/films/poster-holder.jpg'}
+            alt={data?.name}
+          />
+        </Grid>
+        <Grid item lg={7} xl={8} style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
+          <Typography variant="h2" gutterBottom>
+            {data?.name}
+          </Typography>
+          <Typography variant="h5" gutterBottom>
+            Born: {new Date(data?.birthday).toDateString()}
+          </Typography>
+          <Typography variant="body2" align="justify" paragraph style={{ marginBottom: '2rem' }}>
+            {data?.biography || 'Sorry, no biography yet...'}
+          </Typography>
+          <Box marginTop="2rem" display="flex" justifyContent="space-around">
+            <Button variant="contained" color="primary" target="_blank" href={`https://www.imdb.com/name/${data?.imdb_id}`}>
+              IMDB
+            </Button>
+            <Button startIcon={<ArrowBack />} onClick={() => history.goBack()} color="primary">
+              Back
+            </Button>
+          </Box>
+        </Grid>
+        <Box margin="2rem 0">
+          <Typography variant="h2" gutterBottom align="center">Movies</Typography>
+          {movies && <MovieList movies={movies} numberOfMovies={12} />}
+        </Box>
+        <Grid item container style={{ marginTop: '2rem' }}>
+          <div className={classes.buttonContainer}>
+            <Grid item xs={12} sm={6} className={classes.buttonsContainer} />
+          </div>
+        </Grid>
+      </Grid>
+    </>
   );
 };
 
