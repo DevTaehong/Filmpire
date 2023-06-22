@@ -5,15 +5,19 @@ import { useSelector } from 'react-redux';
 // import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
 // NOTE - Step 5 - Import the useGetMoviesQuery hook (Last step)
 import { useGetMoviesQuery } from '../../services/TMDB';
-import { MovieList } from '..';
+import { MovieList, Pagination } from '..';
 
 const Movies = () => {
-  const [page] = useState(1);
+  const [page, setPage] = useState(1);
   const { genreIdOrCategoryName, searchQuery } = useSelector((state) => state.currentGenreOrCategory);
   // https://redux-toolkit.js.org/tutorials/rtk-query
   // If I get an error like "Cannot read properties of undefined (reading 'results')"",
   // it's because I didn't use error, isFetching, or data
   const { data, error, isFetching } = useGetMoviesQuery({ genreIdOrCategoryName, page, searchQuery });
+
+  // const handlePagination = (e) => {
+  //   setPage(e.target.innerText);
+  // };
 
   if (isFetching) {
     return (
@@ -41,6 +45,8 @@ const Movies = () => {
   return (
     <div>
       <MovieList movies={data} />
+      {/* <Pagination count={10} onClick={handlePagination} /> */}
+      <Pagination currentPage={page} setPage={setPage} totalPages={data.total_page} />
     </div>
   );
 };

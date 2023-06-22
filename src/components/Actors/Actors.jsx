@@ -4,12 +4,12 @@ import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import { useGetActorQuery, useGetActorMoviesQuery } from '../../services/TMDB';
 import useStyles from './styles';
-import MovieList from '../MovieList/MovieList';
+import { MovieList, Pagination } from '..';
 
 const Actors = () => {
   const { id } = useParams();
   const history = useHistory();
-  const page = 1;
+  const [page, setPage] = useState(1);
   const { data, error, isFetching } = useGetActorQuery(id);
   const { data: movies, error: actorMoviesError, isFetching: isActorMoviesFetching } = useGetActorMoviesQuery({ id, page });
   const classes = useStyles();
@@ -34,7 +34,7 @@ const Actors = () => {
 
   return (
     <>
-      <Grid container spacing={3} className={classes.containerSpaceAround}>
+      <Grid container spacing={3}>
         <Grid item lg={5} xl={4}>
           <img
             className={classes.image}
@@ -66,12 +66,8 @@ const Actors = () => {
         <Box margin="2rem 0">
           <Typography variant="h2" gutterBottom align="center">Movies</Typography>
           {movies && <MovieList movies={movies} numberOfMovies={12} />}
+          <Pagination currentPage={page} totalPages={movies.total_pages} setPage={setPage} />
         </Box>
-        <Grid item container style={{ marginTop: '2rem' }}>
-          <div className={classes.buttonContainer}>
-            <Grid item xs={12} sm={6} className={classes.buttonsContainer} />
-          </div>
-        </Grid>
       </Grid>
     </>
   );
