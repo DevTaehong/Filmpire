@@ -39,10 +39,10 @@ export const tmdbApi = createApi({
 
     // Get User Specific List
     getList: builder.query({
-      query: ({ listName, accountId, page, sessionId }) => `/account/${accountId}/${listName}?sessionId=${sessionId}&page=${page}&api_key=${tmdbApiKey}`,
+      query: ({ listName, accountId, page, sessionId }) => `/account/${accountId}/${listName}?session_id=${sessionId}&page=${page}&api_key=${tmdbApiKey}`,
     }),
 
-    // Get User Specific List
+    // Get User Specific recommendations
     getRecommendations: builder.query({
       query: ({ movieId, list }) => `/movie/${movieId}/${list}?api_key=${tmdbApiKey}`,
     }),

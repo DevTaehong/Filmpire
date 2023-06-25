@@ -7,16 +7,15 @@ import axios from 'axios';
 import useStyles from './styles';
 import genreIcons from '../../assets/genres';
 import { MovieList } from '..';
-
 import { useGetListQuery, useGetMovieQuery, useGetRecommendationsQuery } from '../../services/TMDB';
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
 import { userSelector } from '../../features/auth';
 
 const MovieInformation = () => {
-  const { user } = useSelector(userSelector);
   // To get id from url
-  const classes = useStyles();
   const { id } = useParams();
+  const { user } = useSelector(userSelector);
+  const classes = useStyles();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
 
@@ -32,11 +31,13 @@ const MovieInformation = () => {
   useEffect(() => {
     // NOTE !{} will be false, but !!{} will be true. an object is true
     // NOTE !'' will be true, but !!'' will be false. an empty string is false
-    setIsMovieFavorite(!!favoriteMovies?.results?.find((movie) => movie.id === data.id));
+    // NOTE The reason why we're using !! is because we want to convert the value, which is an object, to a boolean
+    // NOTE if we don't use !!, then the value will be the value of the object, which is not what we want
+    setIsMovieFavorite(!!favoriteMovies?.results?.find((movie) => movie?.id === data?.id));
   }, [favoriteMovies, data]);
 
   useEffect(() => {
-    setIsMovieWatchlist(!!watchlistMovies.results?.find((movie) => movie.id === data.id));
+    setIsMovieWatchlist(!!watchlistMovies?.results?.find((movie) => movie?.id === data?.id));
   }, [watchlistMovies, data]);
 
   // async because we are fetching data from the api
@@ -56,7 +57,7 @@ const MovieInformation = () => {
     await axios.post(`https://api.themoviedb.org/3/account/${user.id}/watchlist?api_key=${process.env.REACT_APP_TMDB_KEY}&session_id=${localStorage.getItem('session_id')}`, {
       media_type: 'movie',
       media_id: id,
-      favorite: !isMovieWatchlist,
+      watchlist: !isMovieWatchlist,
     });
 
     setIsMovieWatchlist((prev) => !prev);
@@ -76,6 +77,7 @@ const MovieInformation = () => {
       </Box>
     );
   }
+
   return (
     <Grid container className={classes.containerSpaceAround}>
       <Grid item sm={12} lg={4} style={{ display: 'flex', marginBottom: '30px' }}>
@@ -164,7 +166,7 @@ const MovieInformation = () => {
                 >
                   IMDB
                 </Button>
-                {data.videos.results.length > 0 && (<Button onClick={() => setOpen(true)} href="#" endIcon={<Theaters />}>Trailer</Button>)}
+                {data?.videos?.results.length > 0 && (<Button onClick={() => setOpen(true)} href="#" endIcon={<Theaters />}>Trailer</Button>)}
               </ButtonGroup>
             </Grid>
             <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
@@ -206,7 +208,7 @@ const MovieInformation = () => {
             className={classes.video}
             frameBorder="0"
             title="Trailer"
-            src={`https://www.youtube.com/embed/${data.videos.results[0].key}`}
+            src={`https://www.youtube.com/embed/${data?.videos?.results[0].key}`}
             allow="autoplay"
           />
         ) : (<Typography variant="h1">Sorry, nothing was found.</Typography>)}

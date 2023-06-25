@@ -37,5 +37,5 @@ export const createSessionId = async () => {
     } catch (err) {
       throw new Error(err.message);
     }
-  }
+  } else { return 'No token found'; }
 };
