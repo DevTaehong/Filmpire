@@ -23,7 +23,7 @@ const App = () => {
           <Route exact path="/actors/:id">
             <Actors />
           </Route>
-          <Route exact path="/">
+          <Route exact path={['/', '/approved']}>
             <Movies />
           </Route>
           <Route exact path="/profile/:id">
@@ -34,5 +34,5 @@ const App = () => {
     </div>
   );
 };
-
+// TODO: Login and after logout and login again, movies are not shown
 export default App;

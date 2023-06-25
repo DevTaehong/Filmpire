@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography, useMediaQuery } from '@mui/material';
 
 import { useSelector } from 'react-redux';
 // import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
@@ -8,6 +8,7 @@ import { useGetMoviesQuery } from '../../services/TMDB';
 import { MovieList, Pagination } from '..';
 
 const Movies = () => {
+  const lg = useMediaQuery((theme) => theme.breakpoints.only('lg'));
   const [page, setPage] = useState(1);
   const { genreIdOrCategoryName, searchQuery } = useSelector((state) => state.currentGenreOrCategory);
   // https://redux-toolkit.js.org/tutorials/rtk-query
@@ -15,9 +16,7 @@ const Movies = () => {
   // it's because I didn't use error, isFetching, or data
   const { data, error, isFetching } = useGetMoviesQuery({ genreIdOrCategoryName, page, searchQuery });
 
-  // const handlePagination = (e) => {
-  //   setPage(e.target.innerText);
-  // };
+  const numberOfMovies = lg ? 16 : 18;
 
   if (isFetching) {
     return (
@@ -28,7 +27,7 @@ const Movies = () => {
   }
 
   // It will happen when people search for a movie that doesn't exist
-  if (!data.results.length) {
+  if (!data?.results.length) {
     return (
       <Box display="flex" alignItems="center" mt="20px">
         <Typography variant="h4">
@@ -44,8 +43,7 @@ const Movies = () => {
 
   return (
     <div>
-      <MovieList movies={data} />
-      {/* <Pagination count={10} onClick={handlePagination} /> */}
+      <MovieList movies={data} numberOfMovies={numberOfMovies} />
       <Pagination currentPage={page} setPage={setPage} totalPages={data.total_page} />
     </div>
   );

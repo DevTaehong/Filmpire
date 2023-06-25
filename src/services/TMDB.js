@@ -18,7 +18,7 @@ export const tmdbApi = createApi({
       query: ({ genreIdOrCategoryName, page, searchQuery }) => {
         // Get Movies by Search
         if (searchQuery) {
-          return `search/movie?query=${searchQuery}&page=${page}&api_key=${tmdbApiKey}`;
+          return `/search/movie?query=${searchQuery}&page=${page}&api_key=${tmdbApiKey}`;
         }
         // Get Movies by Category
         if (genreIdOrCategoryName && typeof genreIdOrCategoryName === 'string') {
@@ -29,12 +29,17 @@ export const tmdbApi = createApi({
           return `discover/movie?with_genres=${genreIdOrCategoryName}&page=${page}&api_key=${tmdbApiKey}`;
         }
         // Get Popular Movies
-        return `movie/popular?page=${page}?api_key=${tmdbApiKey}`;
+        return `movie/popular?page=${page}&api_key=${tmdbApiKey}`;
       },
     }),
     // Get Movie
     getMovie: builder.query({
       query: (id) => `/movie/${id}?append_to_response=videos,credits&api_key=${tmdbApiKey}`,
+    }),
+
+    // Get User Specific List
+    getList: builder.query({
+      query: ({ listName, accountId, page, sessionId }) => `/account/${accountId}/${listName}?sessionId=${sessionId}&page=${page}&api_key=${tmdbApiKey}`,
     }),
 
     // Get User Specific List
@@ -44,7 +49,7 @@ export const tmdbApi = createApi({
 
     // Get an Actor
     getActor: builder.query({
-      query: (id) => `/person/${id}?api_key=${tmdbApiKey}`,
+      query: (id) => `person/${id}?api_key=${tmdbApiKey}`,
     }),
 
     // Get Actor's Movies
@@ -55,6 +60,7 @@ export const tmdbApi = createApi({
 });
 
 export const {
+  useGetListQuery,
   useGetMoviesQuery,
   useGetGenresQuery,
   useGetMovieQuery,

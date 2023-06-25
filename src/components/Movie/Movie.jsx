@@ -11,15 +11,15 @@ const Movie = ({ movie, i }) => {
     <Grid item xs={12} sm={6} md={4} lg={3} xl={2} className={classes.movie}>
       {/* To give grow effect to each element, use key and timeout={(i + 1) * 250} */}
       <Grow in key={i} timeout={(i + 1) * 250}>
-        <Link className={classes.links} to={`/movie/${movie.id}`}>
+        <Link className={classes.links} to={`/movie/${movie?.id}`}>
           <img
             className={classes.image}
             src={
-              movie.poster_path
-                ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
+              movie?.poster_path
+                ? `https://image.tmdb.org/t/p/w200${movie?.poster_path}`
                 : 'https://www.movienewz.com/img/films/poster-holder.jpg'
             }
-            alt={movie.title || movie.name}
+            alt={movie?.title || movie?.name}
           />
           <Typography variant="h5" className={classes.title}>
             {movie.title}

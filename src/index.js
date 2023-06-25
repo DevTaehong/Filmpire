@@ -8,6 +8,7 @@ import App from './components/App.jsx';
 // NOTE - 2. Step two - Import the store (Go to step 3 with that link below)
 // LINK /Users/taehong/Downloads/filmpire_jsm/src/app/store.js
 import store from './app/store.js';
+import './index.css';
 
 const theme = createTheme({});
 
