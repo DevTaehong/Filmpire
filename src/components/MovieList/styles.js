@@ -4,7 +4,7 @@ import { makeStyles } from '@mui/styles';
 export default makeStyles((theme) => ({
   moviesContainer: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     flexWrap: 'wrap',
     overflow: 'auto',
     [theme.breakpoints.down('sm')]: {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useParams, useHistory } from 'react-router-dom';
 import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import { useGetActorQuery, useGetActorMoviesQuery } from '../../services/TMDB';
@@ -63,12 +63,12 @@ const Actors = () => {
             </Button>
           </Box>
         </Grid>
-        <Box margin="2rem 0">
-          <Typography variant="h2" gutterBottom align="center">Movies</Typography>
-          {movies && <MovieList movies={movies} numberOfMovies={12} />}
-          <Pagination currentPage={page} totalPages={movies.total_pages} setPage={setPage} />
-        </Box>
       </Grid>
+      <Box margin="2rem 0">
+        <Typography variant="h2" gutterBottom align="center">Movies</Typography>
+        {movies && <MovieList movies={movies} numberOfMovies={12} />}
+        <Pagination currentPage={page} totalPages={movies.total_pages} setPage={setPage} />
+      </Box>
     </>
   );
 };

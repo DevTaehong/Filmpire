@@ -11,6 +11,7 @@ export const genreOrCategory = createSlice({
   name: 'genreOrCategory',
   initialState,
   reducers: {
+    // NOTE dispatch use them
     selectGenreOrCategory: (state, action) => {
       state.genreIdOrCategoryName = action.payload;
       state.searchQuery = '';

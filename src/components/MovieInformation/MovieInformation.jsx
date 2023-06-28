@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Modal, Typography, Button, ButtonGroup, Grid, Box, CircularProgress, Rating } from '@mui/material';
 import { Movie as MovieIcon, Theaters, Language, PlusOne, Favorite, FavoriteBorderOutlined, Remove, ArrowBack } from '@mui/icons-material';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import useStyles from './styles';
@@ -18,6 +18,7 @@ const MovieInformation = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const history = useHistory();
 
   const { data, isFetching, error } = useGetMovieQuery(id);
   const { data: recommendations, isFetching: isRecommendationsFetching } = useGetRecommendationsQuery({ list: '/recommendations', movieId: id });
@@ -105,7 +106,7 @@ const MovieInformation = () => {
             </Typography>
           </Box>
           <Typography variant="h6" align="center" gutterBottom>
-            {data?.runtime}min | Language: {data?.spoken_languages[0].english_name}
+            {data?.runtime}min | Language: {data?.spoken_languages[0]?.english_name}
           </Typography>
         </Grid>
         <Grid item className={classes.genresContainer}>
@@ -126,7 +127,7 @@ const MovieInformation = () => {
         </Typography>
         <Typography variant="h5" gutterBottom>Top Cast</Typography>
         <Grid item container spacing={2}>
-          {data && data.credits?.cast?.map((character, i) => (
+          {data && data?.credits?.cast?.map((character, i) => (
             character.profile_path && (
               <Grid item key={i} xs={4} md={2} component={Link} to={`/actors/${character.id}`} style={{ textDecoration: 'none' }}>
                 <img
@@ -178,7 +179,7 @@ const MovieInformation = () => {
                   Watchlist
                 </Button>
                 <Button endIcon={<ArrowBack />} sx={{ borderColor: 'primary.main' }}>
-                  <Typography style={{ textDecoration: 'none' }} component={Link} to="/" color="inherit" variant="subtitle2">
+                  <Typography style={{ textDecoration: 'none' }} onClick={() => history.goBack()} color="inherit" variant="subtitle2">
                     Back
                   </Typography>
                 </Button>
