@@ -25,7 +25,7 @@ const Profile = () => {
 
   const logout = () => {
     localStorage.clear();
-    window.location.href = '/filmpire';
+    window.location.href = '/';
   };
 
   return (
