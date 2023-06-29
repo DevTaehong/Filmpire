@@ -1,8 +1,8 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { Divider, List, ListSubheader, ListItemText, Box, CircularProgress, ListItemButton, ListItemIcon } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
 import { useGetGenresQuery } from '../../services/TMDB';
@@ -18,11 +18,18 @@ const categories = [
 const redLogo = 'https://fontmeme.com/permalink/210930/8531c658a743debe1e1aa1a2fc82006e.png';
 const blueLogo = 'https://fontmeme.com/permalink/210930/6854ae5c7f76597cf8680e48a2c8a50a.png';
 
-const Sidebar = () => {
+const Sidebar = ({ setMobileOpen }) => {
+  // NOTE { genreIdOrCategoryName } = useSelector((state) => state.currentGenreOrCategory) is also possible
+  // NOTE currentGenreOrCategory is from the store, and the genreIdOrCategoryName state is from currentGenreOrCategory.js
+  const currentGenreOrCategory = useSelector((state) => state.genreOrCategory.genreIdOrCategoryName);
   const theme = useTheme();
   const classes = useStyles();
   const { data, isFetching } = useGetGenresQuery();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [currentGenreOrCategory]);
 
   return (
     <>

@@ -11,7 +11,7 @@ const Movies = () => {
   const [page, setPage] = useState(1);
 
   // NOTE Theses states are from currentGenreOrCategory.js
-  const { genreIdOrCategoryName, searchQuery } = useSelector((state) => state.currentGenreOrCategory);
+  const { genreIdOrCategoryName, searchQuery } = useSelector((state) => state.genreOrCategory);
 
   // https://redux-toolkit.js.org/tutorials/rtk-query
   // If I get an error like "Cannot read properties of undefined (reading 'results')"",

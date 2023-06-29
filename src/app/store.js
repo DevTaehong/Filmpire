@@ -12,7 +12,7 @@ export default configureStore({
     [tmdbApi.reducerPath]: tmdbApi.reducer,
 
     // NOTE: genreOrCategoryReducer is from '../features/currentGenreOrCategory'
-    currentGenreOrCategory: genreOrCategoryReducer,
+    genreOrCategory: genreOrCategoryReducer,
 
     // For auth in features/auth.js
     user: userReducer,
