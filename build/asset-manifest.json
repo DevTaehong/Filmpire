@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/filmpire/static/css/main.6d4e09db.css",
-    "main.js": "/filmpire/static/js/main.d20ef7c6.js",
+    "main.js": "/filmpire/static/js/main.b21f7089.js",
     "index.html": "/filmpire/index.html",
     "main.6d4e09db.css.map": "/filmpire/static/css/main.6d4e09db.css.map",
-    "main.d20ef7c6.js.map": "/filmpire/static/js/main.d20ef7c6.js.map"
+    "main.b21f7089.js.map": "/filmpire/static/js/main.b21f7089.js.map"
   },
   "entrypoints": [
     "static/css/main.6d4e09db.css",
-    "static/js/main.d20ef7c6.js"
+    "static/js/main.b21f7089.js"
   ]
 }
