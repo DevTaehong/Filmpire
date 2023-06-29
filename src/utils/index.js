@@ -15,7 +15,8 @@ export const fetchToken = async () => {
     const token = data.request_token;
     if (data.success) {
       localStorage.setItem('request_token', token);
-      window.location.href = `https://www.themoviedb.org/authenticate/${token}?redirect_to=${window.location.origin}/approved`;
+      // FIXME - Change redirect_to to the deployed site if you change the domain
+      window.location.href = `https://www.themoviedb.org/authenticate/${token}?redirect_to=${window.location.origin}/filmpire/approved`;
     }
   } catch (err) {
     throw new Error(err.message);
