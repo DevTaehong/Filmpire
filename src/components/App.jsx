@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { CssBaseline } from '@mui/material';
 import { Route, Switch } from 'react-router-dom';
 
@@ -10,7 +10,6 @@ import { Actors, MovieInformation, Movies, NavBar, Profile } from '.';
 
 const App = () => {
   const classes = useStyles();
-  const alanBtnContainer = useRef();
 
   useAlan();
 
@@ -35,7 +34,6 @@ const App = () => {
           </Route>
         </Switch>
       </main>
-      <div ref={alanBtnContainer} />
     </div>
   );
 };
