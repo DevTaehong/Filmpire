@@ -9,6 +9,7 @@ import App from './components/App.jsx';
 import store from './app/store.js';
 import './index.css';
 
+// eslint-disable-next-line
 ReactDOM.render(
   // NOTE - 1. Step one - Provider is a component that makes the Redux store available to any nested components that have been wrapped in the connect() function.
   <Provider store={store}>
